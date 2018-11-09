@@ -1,15 +1,19 @@
 package org.robolectric.shadows;
 
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.O;
+import static org.robolectric.Shadows.shadowOf;
 import static org.robolectric.shadow.api.Shadow.directlyOn;
 
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.os.Build.VERSION_CODES;
 import android.os.Process;
+import android.os.UserManager;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.robolectric.RuntimeEnvironment;
@@ -32,6 +36,7 @@ public class ShadowActivityManager {
   @RealObject private ActivityManager realObject;
   private Boolean isLowRamDeviceOverride = null;
   private int lockTaskModeState = ActivityManager.LOCK_TASK_MODE_NONE;
+  private final UserManager userManager;
 
   public ShadowActivityManager() {
     ActivityManager.RunningAppProcessInfo processInfo = new ActivityManager.RunningAppProcessInfo();
@@ -39,6 +44,9 @@ public class ShadowActivityManager {
     processInfo.processName = RuntimeEnvironment.application.getPackageName();
     processInfo.pkgList = new String[] {RuntimeEnvironment.application.getPackageName()};
     processes.add(processInfo);
+
+    userManager =
+        (UserManager) RuntimeEnvironment.application.getSystemService(Context.USER_SERVICE);
   }
 
   @Implementation
@@ -104,6 +112,23 @@ public class ShadowActivityManager {
     processInfo.uid = Process.myUid();
   }
 
+  @Implementation(minSdk = JELLY_BEAN_MR1)
+  public boolean switchUser(int userid) {
+    shadowOf(userManager).switchUser(userid);
+    return true;
+  }
+
+  /**
+   * Creates a user with the specified name, userId and flags.
+   *
+   * @param id the unique id of user
+   * @param name name of the user
+   * @param flags 16 bits for user type. See {@link UserInfo#flags}
+   */
+  public void addUser(int id, String name, int flags) {
+    shadowOf(userManager).addUser(id, name, flags);
+  }
+
   @Implementation
   protected void killBackgroundProcesses(String packageName) {
     backgroundPackage = packageName;
@@ -155,8 +180,8 @@ public class ShadowActivityManager {
    * @param processes List of running processes.
    */
   public void setProcesses(List<ActivityManager.RunningAppProcessInfo> processes) {
-    this.processes.clear();
-    this.processes.addAll(processes);
+    ShadowActivityManager.processes.clear();
+    ShadowActivityManager.processes.addAll(processes);
   }
 
   /**
