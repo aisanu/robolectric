@@ -20,7 +20,7 @@ public class ViewInnerTextTest {
 
   @Before
   public void setUp() throws Exception {
-    context = (Application) ApplicationProvider.getApplicationContext();
+    context = ApplicationProvider.getApplicationContext();
   }
 
   @Test

@@ -8,11 +8,10 @@ import java.lang.ref.SoftReference;
  * @param <T> The referent to track.
  */
 public abstract class SoftThreadLocal<T> {
-  private final ThreadLocal<SoftReference<T>> threadLocal = new ThreadLocal<SoftReference<T>>() {
-    @Override protected SoftReference<T> initialValue() {
-      return new SoftReference<>(create());
-    }
-  };
+
+  @SuppressWarnings("NewApi")
+  private final ThreadLocal<SoftReference<T>> threadLocal =
+      ThreadLocal.withInitial(() -> new SoftReference<>(create()));
 
   synchronized public T get() {
     T item = threadLocal.get().get();

@@ -24,7 +24,7 @@ public class ViewStubTest {
   private Context ctxt;
 
   @Before public void setUp() throws Exception {
-    ctxt = (Application) ApplicationProvider.getApplicationContext();
+    ctxt = ApplicationProvider.getApplicationContext();
   }
 
   @Test

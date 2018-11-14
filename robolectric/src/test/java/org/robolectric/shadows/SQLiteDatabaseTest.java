@@ -34,7 +34,7 @@ public class SQLiteDatabaseTest {
     @Before
     public void setUp() throws Exception {
     databasePath =
-        ((Application) ApplicationProvider.getApplicationContext()).getDatabasePath("database.db");
+        ApplicationProvider.getApplicationContext().getDatabasePath("database.db");
         databasePath.getParentFile().mkdirs();
 
         database = openOrCreateDatabase(databasePath);
@@ -924,7 +924,7 @@ public class SQLiteDatabaseTest {
 
     private SQLiteDatabase openOrCreateDatabase(String name) {
     return openOrCreateDatabase(
-        ((Application) ApplicationProvider.getApplicationContext()).getDatabasePath(name));
+        ApplicationProvider.getApplicationContext().getDatabasePath(name));
     }
 
     private SQLiteDatabase openOrCreateDatabase(File databasePath) {

@@ -82,6 +82,7 @@ public class ShadowBitmapFactory {
     return bitmap;
   }
 
+  @SuppressWarnings("ObjectToString")
   @Implementation
   protected static Bitmap decodeFileDescriptor(
       FileDescriptor fd, Rect outPadding, BitmapFactory.Options opts) {
@@ -215,6 +216,7 @@ public class ShadowBitmapFactory {
     widthAndHeightMap.put("file:" + file, new Point(width, height));
   }
 
+  @SuppressWarnings("ObjectToString")
   public static void provideWidthAndHeightHints(FileDescriptor fd, int width, int height) {
     widthAndHeightMap.put("fd:" + fd, new Point(width, height));
   }

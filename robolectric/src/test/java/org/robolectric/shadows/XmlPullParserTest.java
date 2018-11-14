@@ -36,8 +36,7 @@ http://schemas.android.com/apk/res-auto:title(resId=2130771971) type=CDATA: valu
 
   @Test
   public void xmlParser() throws IOException, XmlPullParserException {
-    Resources resources =
-        ((Application) ApplicationProvider.getApplicationContext()).getResources();
+    Resources resources = ApplicationProvider.getApplicationContext().getResources();
     XmlResourceParser parser = resources.getXml(R.xml.xml_attrs);
     assertThat(parser).isNotNull();
 

@@ -22,8 +22,7 @@ public class SQLiteStatementTest {
 
   @Before
   public void setUp() throws Exception {
-    final File databasePath =
-        ((Application) ApplicationProvider.getApplicationContext()).getDatabasePath("path");
+    final File databasePath = ApplicationProvider.getApplicationContext().getDatabasePath("path");
     databasePath.getParentFile().mkdirs();
 
     database = SQLiteDatabase.openOrCreateDatabase(databasePath.getPath(), null);

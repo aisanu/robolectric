@@ -15,14 +15,14 @@ public class ShadowWallpaperManagerTest {
   @Test
   public void getInstance_shouldCreateInstance() {
     WallpaperManager manager =
-        WallpaperManager.getInstance((Application) ApplicationProvider.getApplicationContext());
+        WallpaperManager.getInstance(ApplicationProvider.getApplicationContext());
     assertThat(manager).isNotNull();
   }
 
   @Test
   public void sendWallpaperCommand_shouldNotThrowException() {
     WallpaperManager manager =
-        WallpaperManager.getInstance((Application) ApplicationProvider.getApplicationContext());
+        WallpaperManager.getInstance(ApplicationProvider.getApplicationContext());
     manager.sendWallpaperCommand(null, null, 0, 0, 0, null);
   }
 }

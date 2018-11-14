@@ -2,7 +2,6 @@ package org.robolectric.shadows;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import android.app.Application;
 import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import androidx.test.core.app.ApplicationProvider;
@@ -15,7 +14,7 @@ public class ShadowAbsoluteLayoutTest {
   @Test
   public void getLayoutParams_shouldReturnAbsoluteLayoutParams() throws Exception {
     ViewGroup.LayoutParams layoutParams =
-        (new AbsoluteLayout((Application) ApplicationProvider.getApplicationContext()) {
+        (new AbsoluteLayout(ApplicationProvider.getApplicationContext()) {
               @Override
               protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
                 return super.generateDefaultLayoutParams();
